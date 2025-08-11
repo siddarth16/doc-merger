@@ -7,10 +7,10 @@ global.URL.revokeObjectURL = vi.fn()
 // Mock file API
 Object.defineProperty(window, 'File', {
   value: class MockFile {
-    constructor(chunks: any[], filename: string, options: any = {}) {
+    constructor(chunks: BlobPart[], filename: string, options: FilePropertyBag = {}) {
       this.name = filename
       this.type = options.type || ''
-      this.size = chunks.reduce((acc, chunk) => acc + chunk.length, 0)
+      this.size = chunks.reduce((acc, chunk) => acc + (typeof chunk === 'string' ? chunk.length : chunk.size || 0), 0)
       this.lastModified = Date.now()
     }
     
@@ -27,9 +27,9 @@ Object.defineProperty(window, 'File', {
 // Mock Blob
 Object.defineProperty(window, 'Blob', {
   value: class MockBlob {
-    constructor(chunks: any[] = [], options: any = {}) {
+    constructor(chunks: BlobPart[] = [], options: BlobPropertyBag = {}) {
       this.type = options.type || ''
-      this.size = chunks ? chunks.reduce((acc, chunk) => acc + (chunk?.length || 0), 0) : 0
+      this.size = chunks ? chunks.reduce((acc, chunk) => acc + (typeof chunk === 'string' ? chunk.length : (chunk as Blob).size || 0), 0) : 0
     }
     
     async arrayBuffer() {
@@ -49,7 +49,7 @@ Object.defineProperty(window, 'Worker', {
       this.url = url
     }
     
-    postMessage(data: any) {
+    postMessage() {
       // Mock worker response
       setTimeout(() => {
         if (this.onmessage) {
@@ -60,8 +60,8 @@ Object.defineProperty(window, 'Worker', {
     
     terminate() {}
     
-    onmessage: ((event: any) => void) | null = null
-    onerror: ((event: any) => void) | null = null
+    onmessage: ((event: MessageEvent) => void) | null = null
+    onerror: ((event: ErrorEvent) => void) | null = null
     url: string
   }
 })

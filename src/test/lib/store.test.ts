@@ -9,7 +9,7 @@ const mockFile1: FileItem = {
   kind: 'pdf',
   size: 1024,
   lastModified: Date.now(),
-  blob: new Blob([]) as any,
+  blob: new Blob([]),
   pages: 5,
   ranges: [1, 2, 3, 4, 5]
 }
@@ -20,7 +20,7 @@ const mockFile2: FileItem = {
   kind: 'docx',
   size: 2048,
   lastModified: Date.now(),
-  blob: new Blob() as any
+  blob: new Blob() as Blob
 }
 
 describe('App Store', () => {
@@ -100,7 +100,7 @@ describe('App Store', () => {
     })
 
     it('should update PDF metadata', () => {
-      const { updateSettings, settings } = useAppStore.getState()
+      const { updateSettings } = useAppStore.getState()
       
       updateSettings({
         pdfMetadata: { title: 'Custom Title', author: 'Custom Author' }

@@ -63,7 +63,7 @@ const defaultSettings: AppSettings = {
 
 export const useAppStore = create<AppState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // Files
       files: [],
       addFiles: (newFiles) => set((state) => ({ 

@@ -24,7 +24,10 @@ export class DocxMerger {
     this.reportProgress(0, "Starting DOCX merge...")
 
     // Create sections for each document
-    const sections: any[] = []
+    const sections: Array<{
+      properties: { type: SectionType };
+      children: Paragraph[];
+    }> = []
     const totalFiles = files.filter(f => f.kind === 'docx').length
     let processedFiles = 0
 

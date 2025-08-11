@@ -56,7 +56,7 @@ export function SettingsPanel() {
                   <Button
                     key={color.value}
                     variant={settings.accentColor === color.value ? "default" : "outline"}
-                    onClick={() => updateSettings({ accentColor: color.value as any })}
+                    onClick={() => updateSettings({ accentColor: color.value as 'cyan' | 'violet' | 'green' })}
                     className="h-12 flex flex-col items-center space-y-1"
                   >
                     <div 

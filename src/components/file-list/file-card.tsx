@@ -17,7 +17,7 @@ interface FileCardProps {
   index: number
 }
 
-export function FileCard({ file, index }: FileCardProps) {
+export function FileCard({ file }: FileCardProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editName, setEditName] = useState(file.name)
   const { removeFile, updateFile } = useAppStore()
